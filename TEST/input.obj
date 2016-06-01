@@ -1,0 +1,23 @@
+v 	1 2 3 4
+v 3578 6 467 54
+v 378 6 467 54
+v 358 6 467 54
+
+vt 12 13 14 15
+vt 23 5 8 0
+
+vn 12 15 16
+vn 12 15 17
+vn 12 15 18
+vn 12 15 19
+
+mtllib TEST\\input.mtl
+
+g Group1
+o First
+f 1/2 2/1 1/2
+usemtl Texture1
+g Group2
+o Second
+usemtl Texture2
+f 3/2/1 4/2/2 1/1/4

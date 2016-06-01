@@ -1,0 +1,3 @@
+newmtl Square1000
+map_Ka TEST\\SQUARE\\square.bmp
+map_Ns TEST\\SQUARE\\squareNs.bmp

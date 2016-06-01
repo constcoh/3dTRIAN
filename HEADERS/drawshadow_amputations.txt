@@ -1,0 +1,424 @@
+	//static int fnAmputationFront(const double &f,CTrian3dbu d,CTrian3dbu &otv1,CTrian3dbu &otv2){
+	//	CTrian3dbu ot1,ot2;
+	//	bool b0=(d.v0.z>f),			b1=(d.v1.z>f),			b2=(d.v2.z>f);
+	//	//if(CGOption::check){
+	//	//	std::cout<<"   b0="<<b0<<"   b1="<<b1<<"   b2="<<b2<<'\n';
+	//	//	d.v0.fnPrint();
+	//	//	d.v1.fnPrint();
+	//	//	d.v2.fnPrint();
+	//	//}
+	//	if(!b0 && !b1 && !b2){otv1=d; return 1;}
+	//	if(b0 && b1 && b2) return 0;
+	//	if(b0 && b2){swap(b2,b1); swap(d.v2,d.v1); swap(d.vn2,d.vn1); swap(d.vt2,d.vt1);}
+	//	if(b1 && b2){swap(b2,b0); swap(d.v2,d.v0); swap(d.vn2,d.vn0); swap(d.vt2,d.vt0);}
+	//	if(b0 && b1){
+	//		ot1.v2=d.v2;				ot1.vn2=d.vn2;				ot1.vt2=d.vt2;
+	//		ot1.Img=d.Img;
+	//		POINT3 v20,v21; double k0,k1;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v21.x=d.v1.x-d.v2.x;		v21.y=d.v1.y-d.v2.y;		v21.z=d.v1.z-d.v2.z;
+	//		k0=(f-d.v2.z)/v20.z;	k1=(f-d.v2.z)/v21.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.v0.x=ot1.v2.x+v20.x;	ot1.v0.y=ot1.v2.y+v20.y;	ot1.v0.z=ot1.v2.z+v20.z;	
+	//		ot1.v1.x=ot1.v2.x+v21.x;	ot1.v1.y=ot1.v2.y+v21.y;	ot1.v1.z=ot1.v2.z+v21.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v21.x=d.vn1.x-d.vn2.x;		v21.y=d.vn1.y-d.vn2.y;		v21.z=d.vn1.z-d.vn2.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.vn0.x=ot1.vn2.x+v20.x;	ot1.vn0.y=ot1.vn2.y+v20.y;	ot1.vn0.z=ot1.vn2.z+v20.z;	
+	//		ot1.vn1.x=ot1.vn2.x+v21.x;	ot1.vn1.y=ot1.vn2.y+v21.y;	ot1.vn1.z=ot1.vn2.z+v21.z;	
+	//		//переработка векторов текстур
+	//		v20.x=(double)(d.vt0.x-d.vt2.x);		v20.y=(double)(d.vt0.y-d.vt2.y);
+	//		v21.x=(double)(d.vt1.x-d.vt2.x);		v21.y=(double)(d.vt1.y-d.vt2.y);
+	//		v20.x*=k0;		v20.y*=k0;				v21.x*=k1;		v21.y*=k1;
+	//		ot1.vt0.x=ot1.vt2.x+(int)v20.x;		ot1.vt0.y=ot1.vt2.y+(int)v20.y;	
+	//		ot1.vt1.x=ot1.vt2.x+(int)v21.x;		ot1.vt1.y=ot1.vt2.y+(int)v21.y;	
+	//		otv1=ot1;
+	//		return 1;
+	//	}
+	//	if(b1){swap(b1,b0);	swap(d.v1,d.v0);	swap(d.vn1,d.vn0);	swap(d.vt1,d.vt0);}
+	//	if(b2){swap(b2,b0);	swap(d.v2,d.v0);	swap(d.vn2,d.vn0);	swap(d.vt2,d.vt0);}
+	//	if(b0){
+	//				 ot1.v1=d.v1;					  ot1.vn1=d.vn1;				  ot1.vt1=d.vt1;				
+	//		ot2.v2=ot1.v2=d.v2;			ot2.vn2=ot1.vn2=d.vn2;		ot2.vt2=ot1.vt2=d.vt2;				
+	//		ot2.Img=ot1.Img=d.Img;
+	//		POINT3 v20,v10; double k1,k2;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v10.x=d.v0.x-d.v1.x;		v10.y=d.v0.y-d.v1.y;		v10.z=d.v0.z-d.v1.z;
+	//		k2=(f-d.v2.z)/v20.z;	k1=(f-d.v1.z)/v10.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.v1.x=ot1.v0.x=ot1.v1.x+v10.x;	ot2.v1.y=ot1.v0.y=ot1.v1.y+v10.y;	ot2.v1.z=ot1.v0.z=ot1.v1.z+v10.z;	
+	//					ot2.v0.x=ot2.v2.x+v20.x;				ot2.v0.y=ot2.v2.y+v20.y;				ot2.v0.z=ot2.v2.z+v20.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v10.x=d.vn0.x-d.vn1.x;		v10.y=d.vn0.y-d.vn1.y;		v20.z=d.vn0.z-d.vn1.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.vn1.x=ot1.vn0.x=ot1.vn1.x+v10.x;	ot2.vn1.y=ot1.vn0.y=ot1.vn1.y+v10.y;	ot2.vn2.z=ot1.vn0.z=ot1.vn1.z+v10.z;	
+	//					 ot2.vn0.x=ot2.vn2.x+v20.x;				 ot2.vn0.y=ot2.vn2.y+v20.y;				 ot2.vn0.z=ot2.vn2.z+v20.z;	
+	//		//переработка векторов текстур
+	//		v20.x=d.vt0.x-d.vt2.x;				v20.y=d.vt0.y-d.vt2.y;
+	//		v10.x=d.vt0.x-d.vt1.x;				v10.y=d.vt0.y-d.vt1.y;
+	//		v20.x*=k2;		v20.y*=k2;			v10.x*=k1;		v10.y*=k1;
+	//		ot2.vt1.x=ot1.vt0.x=ot1.vt1.x+v10.x;			ot2.vt1.y=ot1.vt0.y=ot1.vt1.y+v10.y;	
+	//					 ot2.vt0.x=ot2.vt2.x+v20.x;						 ot2.vt0.y=ot2.vt2.y+v20.y;	
+	//		otv1=ot1; otv2=ot2;
+	//		return 2;
+	//	}
+	//	return -1;
+	//}
+	//static int fnAmputationBack(const double &f,CTrian3dbu d,CTrian3dbu &otv1,CTrian3dbu &otv2){
+	//	CTrian3dbu ot1,ot2;
+	//	bool b0=(d.v0.z<f),			b1=(d.v1.z<f),			b2=(d.v2.z<f);
+	//	//if(CGOption::check){
+	//	//	std::cout<<"   b0="<<b0<<"   b1="<<b1<<"   b2="<<b2<<'\n';
+	//	//	d.v0.fnPrint();
+	//	//	d.v1.fnPrint();
+	//	//	d.v2.fnPrint();
+	//	//}
+	//	if(!b0 && !b1 && !b2){otv1=d; return 1;}
+	//	if(b0 && b1 && b2) return 0;
+	//	if(b0 && b2){swap(b2,b1); swap(d.v2,d.v1); swap(d.vn2,d.vn1); swap(d.vt2,d.vt1);}
+	//	if(b1 && b2){swap(b2,b0); swap(d.v2,d.v0); swap(d.vn2,d.vn0); swap(d.vt2,d.vt0);}
+	//	if(b0 && b1){
+	//		ot1.v2=d.v2;				ot1.vn2=d.vn2;				ot1.vt2=d.vt2;				
+	//		ot1.Img=d.Img;
+	//		POINT3 v20,v21; double k0,k1;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v21.x=d.v1.x-d.v2.x;		v21.y=d.v1.y-d.v2.y;		v21.z=d.v1.z-d.v2.z;
+	//		k0=(f-d.v2.z)/v20.z;	k1=(f-d.v2.z)/v21.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.v0.x=ot1.v2.x+v20.x;	ot1.v0.y=ot1.v2.y+v20.y;	ot1.v0.z=ot1.v2.z+v20.z;	
+	//		ot1.v1.x=ot1.v2.x+v21.x;	ot1.v1.y=ot1.v2.y+v21.y;	ot1.v1.z=ot1.v2.z+v21.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v21.x=d.vn1.x-d.vn2.x;		v21.y=d.vn1.y-d.vn2.y;		v21.z=d.vn1.z-d.vn2.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.vn0.x=ot1.vn2.x+v20.x;	ot1.vn0.y=ot1.vn2.y+v20.y;	ot1.vn0.z=ot1.vn2.z+v20.z;	
+	//		ot1.vn1.x=ot1.vn2.x+v21.x;	ot1.vn1.y=ot1.vn2.y+v21.y;	ot1.vn1.z=ot1.vn2.z+v21.z;	
+	//		//переработка векторов текстур
+	//		v20.x=(double)(d.vt0.x-d.vt2.x);		v20.y=(double)(d.vt0.y-d.vt2.y);
+	//		v21.x=(double)(d.vt1.x-d.vt2.x);		v21.y=(double)(d.vt1.y-d.vt2.y);
+	//		v20.x*=k0;		v20.y*=k0;				v21.x*=k1;		v21.y*=k1;
+	//		ot1.vt0.x=ot1.vt2.x+(int)v20.x;		ot1.vt0.y=ot1.vt2.y+(int)v20.y;	
+	//		ot1.vt1.x=ot1.vt2.x+(int)v21.x;		ot1.vt1.y=ot1.vt2.y+(int)v21.y;	
+	//		otv1=ot1;
+	//		return 1;
+	//	}
+	//	if(b1){swap(b1,b0);	swap(d.v1,d.v0);	swap(d.vn1,d.vn0);	swap(d.vt1,d.vt0);}
+	//	if(b2){swap(b2,b0);	swap(d.v2,d.v0);	swap(d.vn2,d.vn0);	swap(d.vt2,d.vt0);}
+	//	if(b0){
+	//				 ot1.v1=d.v1;					  ot1.vn1=d.vn1;				  ot1.vt1=d.vt1;				
+	//		ot2.v2=ot1.v2=d.v2;			ot2.vn2=ot1.vn2=d.vn2;		ot2.vt2=ot1.vt2=d.vt2;				
+	//		ot2.Img=ot1.Img=d.Img;
+	//		POINT3 v20,v10; double k1,k2;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v10.x=d.v0.x-d.v1.x;		v10.y=d.v0.y-d.v1.y;		v10.z=d.v0.z-d.v1.z;
+	//		k2=(f-d.v2.z)/v20.z;	k1=(f-d.v1.z)/v10.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.v1.x=ot1.v0.x=ot1.v1.x+v10.x;	ot2.v1.y=ot1.v0.y=ot1.v1.y+v10.y;	ot2.v1.z=ot1.v0.z=ot1.v1.z+v10.z;	
+	//					ot2.v0.x=ot2.v2.x+v20.x;				ot2.v0.y=ot2.v2.y+v20.y;				ot2.v0.z=ot2.v2.z+v20.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v10.x=d.vn0.x-d.vn1.x;		v10.y=d.vn0.y-d.vn1.y;		v20.z=d.vn0.z-d.vn1.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.vn1.x=ot1.vn0.x=ot1.vn1.x+v10.x;	ot2.vn1.y=ot1.vn0.y=ot1.vn1.y+v10.y;	ot2.vn2.z=ot1.vn0.z=ot1.vn1.z+v10.z;	
+	//					 ot2.vn0.x=ot2.vn2.x+v20.x;				 ot2.vn0.y=ot2.vn2.y+v20.y;				 ot2.vn0.z=ot2.vn2.z+v20.z;	
+	//		//переработка векторов текстур
+	//		v20.x=d.vt0.x-d.vt2.x;				v20.y=d.vt0.y-d.vt2.y;
+	//		v10.x=d.vt0.x-d.vt1.x;				v10.y=d.vt0.y-d.vt1.y;
+	//		v20.x*=k2;		v20.y*=k2;			v10.x*=k1;		v10.y*=k1;
+	//		ot2.vt1.x=ot1.vt0.x=ot1.vt1.x+v10.x;			ot2.vt1.y=ot1.vt0.y=ot1.vt1.y+v10.y;	
+	//					 ot2.vt0.x=ot2.vt2.x+v20.x;						 ot2.vt0.y=ot2.vt2.y+v20.y;	
+	//		otv1=ot1; otv2=ot2;
+	//		return 2;
+	//	}
+	//	return -1;
+	//}
+	//static int fnAmputationXFront(CTrian3dbu d,CTrian3dbu &otv1,CTrian3dbu &otv2){
+	//	CTrian3dbu ot1,ot2;
+	//	bool b0=(d.v0.x>1),			b1=(d.v1.x>1),			b2=(d.v2.x>1);
+	//	//if(CGOption::check){
+	//	//	std::cout<<"   b0="<<b0<<"   b1="<<b1<<"   b2="<<b2<<'\n';
+	//	//	d.v0.fnPrint();
+	//	//	d.v1.fnPrint();
+	//	//	d.v2.fnPrint();
+	//	//}
+	//	if(!b0 && !b1 && !b2){otv1=d; return 1;}
+	//	if(b0 && b1 && b2) return 0;
+	//	if(b0 && b2){swap(b2,b1); swap(d.v2,d.v1); swap(d.vn2,d.vn1); swap(d.vt2,d.vt1);}
+	//	if(b1 && b2){swap(b2,b0); swap(d.v2,d.v0); swap(d.vn2,d.vn0); swap(d.vt2,d.vt0);}
+	//	if(b0 && b1){
+	//		ot1.v2=d.v2;				ot1.vn2=d.vn2;				ot1.vt2=d.vt2;				
+	//		ot1.Img=d.Img;
+	//		POINT3 v20,v21; double k0,k1;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v21.x=d.v1.x-d.v2.x;		v21.y=d.v1.y-d.v2.y;		v21.z=d.v1.z-d.v2.z;
+	//		k0=(1-d.v2.x)/v20.x;	k1=(1-d.v2.x)/v21.x;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.v0.x=ot1.v2.x+v20.x;	ot1.v0.y=ot1.v2.y+v20.y;	ot1.v0.z=ot1.v2.z+v20.z;	
+	//		ot1.v1.x=ot1.v2.x+v21.x;	ot1.v1.y=ot1.v2.y+v21.y;	ot1.v1.z=ot1.v2.z+v21.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v21.x=d.vn1.x-d.vn2.x;		v21.y=d.vn1.y-d.vn2.y;		v21.z=d.vn1.z-d.vn2.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.vn0.x=ot1.vn2.x+v20.x;	ot1.vn0.y=ot1.vn2.y+v20.y;	ot1.vn0.z=ot1.vn2.z+v20.z;	
+	//		ot1.vn1.x=ot1.vn2.x+v21.x;	ot1.vn1.y=ot1.vn2.y+v21.y;	ot1.vn1.z=ot1.vn2.z+v21.z;	
+	//		//переработка векторов текстур
+	//		v20.x=(double)(d.vt0.x-d.vt2.x);		v20.y=(double)(d.vt0.y-d.vt2.y);
+	//		v21.x=(double)(d.vt1.x-d.vt2.x);		v21.y=(double)(d.vt1.y-d.vt2.y);
+	//		v20.x*=k0;		v20.y*=k0;				v21.x*=k1;		v21.y*=k1;
+	//		ot1.vt0.x=ot1.vt2.x+(int)v20.x;		ot1.vt0.y=ot1.vt2.y+(int)v20.y;	
+	//		ot1.vt1.x=ot1.vt2.x+(int)v21.x;		ot1.vt1.y=ot1.vt2.y+(int)v21.y;	
+	//		otv1=ot1;
+	//		return 1;
+	//	}
+	//	if(b1){swap(b1,b0);	swap(d.v1,d.v0);	swap(d.vn1,d.vn0);	swap(d.vt1,d.vt0);}
+	//	if(b2){swap(b2,b0);	swap(d.v2,d.v0);	swap(d.vn2,d.vn0);	swap(d.vt2,d.vt0);}
+	//	if(b0){
+	//				 ot1.v1=d.v1;					  ot1.vn1=d.vn1;				  ot1.vt1=d.vt1;				
+	//		ot2.v2=ot1.v2=d.v2;			ot2.vn2=ot1.vn2=d.vn2;		ot2.vt2=ot1.vt2=d.vt2;				
+	//		ot2.Img=ot1.Img=d.Img;
+	//		POINT3 v20,v10; double k1,k2;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v10.x=d.v0.x-d.v1.x;		v10.y=d.v0.y-d.v1.y;		v10.z=d.v0.z-d.v1.z;
+	//		k2=(1-d.v2.x)/v20.x;	k1=(1-d.v1.x)/v10.x;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.v1.x=ot1.v0.x=ot1.v1.x+v10.x;	ot2.v1.y=ot1.v0.y=ot1.v1.y+v10.y;	ot2.v1.z=ot1.v0.z=ot1.v1.z+v10.z;	
+	//					ot2.v0.x=ot2.v2.x+v20.x;				ot2.v0.y=ot2.v2.y+v20.y;				ot2.v0.z=ot2.v2.z+v20.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v10.x=d.vn0.x-d.vn1.x;		v10.y=d.vn0.y-d.vn1.y;		v10.z=d.vn0.z-d.vn1.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.vn1.x=ot1.vn0.x=ot1.vn1.x+v10.x;	ot2.vn1.y=ot1.vn0.y=ot1.vn1.y+v10.y;	ot2.vn2.z=ot1.vn0.z=ot1.vn1.z+v10.z;	
+	//					 ot2.vn0.x=ot2.vn2.x+v20.x;				 ot2.vn0.y=ot2.vn2.y+v20.y;				 ot2.vn0.z=ot2.vn2.z+v20.z;	
+	//		//переработка векторов текстур
+	//		v20.x=d.vt0.x-d.vt2.x;				v20.y=d.vt0.y-d.vt2.y;
+	//		v10.x=d.vt0.x-d.vt1.x;				v10.y=d.vt0.y-d.vt1.y;
+	//		v20.x*=k2;		v20.y*=k2;			v10.x*=k1;		v10.y*=k1;
+	//		ot2.vt1.x=ot1.vt0.x=ot1.vt1.x+v10.x;			ot2.vt1.y=ot1.vt0.y=ot1.vt1.y+v10.y;	
+	//					 ot2.vt0.x=ot2.vt2.x+v20.x;						 ot2.vt0.y=ot2.vt2.y+v20.y;	
+	//		otv1=ot1; otv2=ot2;
+	//		return 2;
+	//	}
+	//	return -1;
+	//}
+	//static int fnAmputationXBack(CTrian3dbu d,CTrian3dbu &otv1,CTrian3dbu &otv2){
+	//	CTrian3dbu ot1,ot2;
+	//	bool b0=(d.v0.x<-1),			b1=(d.v1.x<-1),			b2=(d.v2.x<-1);
+	//	//if(CGOption::check){
+	//	//	std::cout<<"   b0="<<b0<<"   b1="<<b1<<"   b2="<<b2<<'\n';
+	//	//	d.v0.fnPrint();
+	//	//	d.v1.fnPrint();
+	//	//	d.v2.fnPrint();
+	//	//}
+	//	if(!b0 && !b1 && !b2){otv1=d; return 1;}
+	//	if(b0 && b1 && b2) return 0;
+	//	if(b0 && b2){swap(b2,b1); swap(d.v2,d.v1); swap(d.vn2,d.vn1); swap(d.vt2,d.vt1);}
+	//	if(b1 && b2){swap(b2,b0); swap(d.v2,d.v0); swap(d.vn2,d.vn0); swap(d.vt2,d.vt0);}
+	//	if(b0 && b1){
+	//		ot1.v2=d.v2;				ot1.vn2=d.vn2;				ot1.vt2=d.vt2;				
+	//		ot1.Img=d.Img;
+	//		POINT3 v20,v21; double k0,k1;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v21.x=d.v1.x-d.v2.x;		v21.y=d.v1.y-d.v2.y;		v21.z=d.v1.z-d.v2.z;
+	//		k0=(-1-d.v2.x)/v20.x;	k1=(-1-d.v2.x)/v21.x;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.v0.x=ot1.v2.x+v20.x;	ot1.v0.y=ot1.v2.y+v20.y;	ot1.v0.z=ot1.v2.z+v20.z;	
+	//		ot1.v1.x=ot1.v2.x+v21.x;	ot1.v1.y=ot1.v2.y+v21.y;	ot1.v1.z=ot1.v2.z+v21.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v21.x=d.vn1.x-d.vn2.x;		v21.y=d.vn1.y-d.vn2.y;		v21.z=d.vn1.z-d.vn2.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.vn0.x=ot1.vn2.x+v20.x;	ot1.vn0.y=ot1.vn2.y+v20.y;	ot1.vn0.z=ot1.vn2.z+v20.z;	
+	//		ot1.vn1.x=ot1.vn2.x+v21.x;	ot1.vn1.y=ot1.vn2.y+v21.y;	ot1.vn1.z=ot1.vn2.z+v21.z;	
+	//		//переработка векторов текстур
+	//		v20.x=(double)(d.vt0.x-d.vt2.x);		v20.y=(double)(d.vt0.y-d.vt2.y);
+	//		v21.x=(double)(d.vt1.x-d.vt2.x);		v21.y=(double)(d.vt1.y-d.vt2.y);
+	//		v20.x*=k0;		v20.y*=k0;				v21.x*=k1;		v21.y*=k1;
+	//		ot1.vt0.x=ot1.vt2.x+(int)v20.x;		ot1.vt0.y=ot1.vt2.y+(int)v20.y;	
+	//		ot1.vt1.x=ot1.vt2.x+(int)v21.x;		ot1.vt1.y=ot1.vt2.y+(int)v21.y;	
+	//		otv1=ot1;
+	//		return 1;
+	//	}
+	//	if(b1){swap(b1,b0);	swap(d.v1,d.v0);	swap(d.vn1,d.vn0);	swap(d.vt1,d.vt0);}
+	//	if(b2){swap(b2,b0);	swap(d.v2,d.v0);	swap(d.vn2,d.vn0);	swap(d.vt2,d.vt0);}
+	//	if(b0){
+	//				 ot1.v1=d.v1;					  ot1.vn1=d.vn1;				  ot1.vt1=d.vt1;				
+	//		ot2.v2=ot1.v2=d.v2;			ot2.vn2=ot1.vn2=d.vn2;		ot2.vt2=ot1.vt2=d.vt2;				
+	//		ot2.Img=ot1.Img=d.Img;
+	//		POINT3 v20,v10; double k1,k2;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v10.x=d.v0.x-d.v1.x;		v10.y=d.v0.y-d.v1.y;		v10.z=d.v0.z-d.v1.z;
+	//		k2=(-1-d.v2.x)/v20.x;	k1=(-1-d.v1.x)/v10.x;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.v1.x=ot1.v0.x=ot1.v1.x+v10.x;	ot2.v1.y=ot1.v0.y=ot1.v1.y+v10.y;	ot2.v1.z=ot1.v0.z=ot1.v1.z+v10.z;	
+	//					ot2.v0.x=ot2.v2.x+v20.x;				ot2.v0.y=ot2.v2.y+v20.y;				ot2.v0.z=ot2.v2.z+v20.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v10.x=d.vn0.x-d.vn1.x;		v10.y=d.vn0.y-d.vn1.y;		v20.z=d.vn0.z-d.vn1.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.vn1.x=ot1.vn0.x=ot1.vn1.x+v10.x;	ot2.vn1.y=ot1.vn0.y=ot1.vn1.y+v10.y;	ot2.vn2.z=ot1.vn0.z=ot1.vn1.z+v10.z;	
+	//					 ot2.vn0.x=ot2.vn2.x+v20.x;				 ot2.vn0.y=ot2.vn2.y+v20.y;				 ot2.vn0.z=ot2.vn2.z+v20.z;	
+	//		//переработка векторов текстур
+	//		v20.x=d.vt0.x-d.vt2.x;				v20.y=d.vt0.y-d.vt2.y;
+	//		v10.x=d.vt0.x-d.vt1.x;				v10.y=d.vt0.y-d.vt1.y;
+	//		v20.x*=k2;		v20.y*=k2;			v10.x*=k1;		v10.y*=k1;
+	//		ot2.vt1.x=ot1.vt0.x=ot1.vt1.x+v10.x;			ot2.vt1.y=ot1.vt0.y=ot1.vt1.y+v10.y;	
+	//					 ot2.vt0.x=ot2.vt2.x+v20.x;						 ot2.vt0.y=ot2.vt2.y+v20.y;	
+	//		otv1=ot1; otv2=ot2;
+	//		return 2;
+	//	}
+	//	return -1;
+	//}
+
+
+	//static int fnAmputationYFront(CTrian3dbu d,CTrian3dbu &otv1,CTrian3dbu &otv2){
+	//	CTrian3dbu ot1,ot2;
+	//	bool b0=(d.v0.y>1),			b1=(d.v1.y>1),			b2=(d.v2.y>1);
+	//	//if(CGOption::check){
+	//	//	std::cout<<"   b0="<<b0<<"   b1="<<b1<<"   b2="<<b2<<'\n';
+	//	//	d.v0.fnPrint();
+	//	//	d.v1.fnPrint();
+	//	//	d.v2.fnPrint();
+	//	//}
+	//	if(!b0 && !b1 && !b2){otv1=d; return 1;}
+	//	if(b0 && b1 && b2) return 0;
+	//	if(b0 && b2){swap(b2,b1); swap(d.v2,d.v1); swap(d.vn2,d.vn1); swap(d.vt2,d.vt1);}
+	//	if(b1 && b2){swap(b2,b0); swap(d.v2,d.v0); swap(d.vn2,d.vn0); swap(d.vt2,d.vt0);}
+	//	if(b0 && b1){
+	//		ot1.v2=d.v2;				ot1.vn2=d.vn2;				ot1.vt2=d.vt2;				
+	//		ot1.Img=d.Img;
+	//		POINT3 v20,v21; double k0,k1;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v21.x=d.v1.x-d.v2.x;		v21.y=d.v1.y-d.v2.y;		v21.z=d.v1.z-d.v2.z;
+	//		k0=(1-d.v2.y)/v20.y;	k1=(1-d.v2.y)/v21.y;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.v0.x=ot1.v2.x+v20.x;	ot1.v0.y=ot1.v2.y+v20.y;	ot1.v0.z=ot1.v2.z+v20.z;	
+	//		ot1.v1.x=ot1.v2.x+v21.x;	ot1.v1.y=ot1.v2.y+v21.y;	ot1.v1.z=ot1.v2.z+v21.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v21.x=d.vn1.x-d.vn2.x;		v21.y=d.vn1.y-d.vn2.y;		v21.z=d.vn1.z-d.vn2.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.vn0.x=ot1.vn2.x+v20.x;	ot1.vn0.y=ot1.vn2.y+v20.y;	ot1.vn0.z=ot1.vn2.z+v20.z;	
+	//		ot1.vn1.x=ot1.vn2.x+v21.x;	ot1.vn1.y=ot1.vn2.y+v21.y;	ot1.vn1.z=ot1.vn2.z+v21.z;	
+	//		//переработка векторов текстур
+	//		v20.x=(double)(d.vt0.x-d.vt2.x);		v20.y=(double)(d.vt0.y-d.vt2.y);
+	//		v21.x=(double)(d.vt1.x-d.vt2.x);		v21.y=(double)(d.vt1.y-d.vt2.y);
+	//		v20.x*=k0;		v20.y*=k0;				v21.x*=k1;		v21.y*=k1;
+	//		ot1.vt0.x=ot1.vt2.x+(int)v20.x;		ot1.vt0.y=ot1.vt2.y+(int)v20.y;	
+	//		ot1.vt1.x=ot1.vt2.x+(int)v21.x;		ot1.vt1.y=ot1.vt2.y+(int)v21.y;	
+	//		otv1=ot1;
+	//		return 1;
+	//	}
+	//	if(b1){swap(b1,b0);	swap(d.v1,d.v0);	swap(d.vn1,d.vn0);	swap(d.vt1,d.vt0);}
+	//	if(b2){swap(b2,b0);	swap(d.v2,d.v0);	swap(d.vn2,d.vn0);	swap(d.vt2,d.vt0);}
+	//	if(b0){
+	//				 ot1.v1=d.v1;					  ot1.vn1=d.vn1;				  ot1.vt1=d.vt1;				
+	//		ot2.v2=ot1.v2=d.v2;			ot2.vn2=ot1.vn2=d.vn2;		ot2.vt2=ot1.vt2=d.vt2;				
+	//		ot2.Img=ot1.Img=d.Img;
+	//		POINT3 v20,v10; double k1,k2;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v10.x=d.v0.x-d.v1.x;		v10.y=d.v0.y-d.v1.y;		v10.z=d.v0.z-d.v1.z;
+	//		k2=(1-d.v2.y)/v20.y;	k1=(1-d.v1.y)/v10.y;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.v1.x=ot1.v0.x=ot1.v1.x+v10.x;	ot2.v1.y=ot1.v0.y=ot1.v1.y+v10.y;	ot2.v1.z=ot1.v0.z=ot1.v1.z+v10.z;	
+	//					ot2.v0.x=ot2.v2.x+v20.x;				ot2.v0.y=ot2.v2.y+v20.y;				ot2.v0.z=ot2.v2.z+v20.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v10.x=d.vn0.x-d.vn1.x;		v10.y=d.vn0.y-d.vn1.y;		v20.z=d.vn0.z-d.vn1.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.vn1.x=ot1.vn0.x=ot1.vn1.x+v10.x;	ot2.vn1.y=ot1.vn0.y=ot1.vn1.y+v10.y;	ot2.vn2.z=ot1.vn0.z=ot1.vn1.z+v10.z;	
+	//					 ot2.vn0.x=ot2.vn2.x+v20.x;				 ot2.vn0.y=ot2.vn2.y+v20.y;				 ot2.vn0.z=ot2.vn2.z+v20.z;	
+	//		//переработка векторов текстур
+	//		v20.x=d.vt0.x-d.vt2.x;				v20.y=d.vt0.y-d.vt2.y;
+	//		v10.x=d.vt0.x-d.vt1.x;				v10.y=d.vt0.y-d.vt1.y;
+	//		v20.x*=k2;		v20.y*=k2;			v10.x*=k1;		v10.y*=k1;
+	//		ot2.vt1.x=ot1.vt0.x=ot1.vt1.x+v10.x;			ot2.vt1.y=ot1.vt0.y=ot1.vt1.y+v10.y;	
+	//					 ot2.vt0.x=ot2.vt2.x+v20.x;						 ot2.vt0.y=ot2.vt2.y+v20.y;	
+	//		otv1=ot1; otv2=ot2;
+	//		return 2;
+	//	}
+	//	return -1;
+	//}
+
+
+	//static int fnAmputationYBack(CTrian3dbu d,CTrian3dbu &otv1,CTrian3dbu &otv2){
+	//	CTrian3dbu ot1,ot2;
+	//	bool b0=(d.v0.y<-1),			b1=(d.v1.y<-1),			b2=(d.v2.y<-1);
+	//	//if(CGOption::check){
+	//	//	std::cout<<"   b0="<<b0<<"   b1="<<b1<<"   b2="<<b2<<'\n';
+	//	//	d.v0.fnPrint();
+	//	//	d.v1.fnPrint();
+	//	//	d.v2.fnPrint();
+	//	//}
+	//	if(!b0 && !b1 && !b2){otv1=d; return 1;}
+	//	if(b0 && b1 && b2) return 0;
+	//	if(b0 && b2){swap(b2,b1); swap(d.v2,d.v1); swap(d.vn2,d.vn1); swap(d.vt2,d.vt1);}
+	//	if(b1 && b2){swap(b2,b0); swap(d.v2,d.v0); swap(d.vn2,d.vn0); swap(d.vt2,d.vt0);}
+	//	if(b0 && b1){
+	//		ot1.v2=d.v2;				ot1.vn2=d.vn2;				ot1.vt2=d.vt2;				
+	//		ot1.Img=d.Img;
+	//		POINT3 v20,v21; double k0,k1;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v21.x=d.v1.x-d.v2.x;		v21.y=d.v1.y-d.v2.y;		v21.z=d.v1.z-d.v2.z;
+	//		k0=(-1-d.v2.y)/v20.y;	k1=(-1-d.v2.y)/v21.y;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.v0.x=ot1.v2.x+v20.x;	ot1.v0.y=ot1.v2.y+v20.y;	ot1.v0.z=ot1.v2.z+v20.z;	
+	//		ot1.v1.x=ot1.v2.x+v21.x;	ot1.v1.y=ot1.v2.y+v21.y;	ot1.v1.z=ot1.v2.z+v21.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v21.x=d.vn1.x-d.vn2.x;		v21.y=d.vn1.y-d.vn2.y;		v21.z=d.vn1.z-d.vn2.z;
+	//		v20.x*=k0;		v20.y*=k0;		v20.z*=k0;			v21.x*=k1;		v21.y*=k1;		v21.z*=k1;
+	//		ot1.vn0.x=ot1.vn2.x+v20.x;	ot1.vn0.y=ot1.vn2.y+v20.y;	ot1.vn0.z=ot1.vn2.z+v20.z;	
+	//		ot1.vn1.x=ot1.vn2.x+v21.x;	ot1.vn1.y=ot1.vn2.y+v21.y;	ot1.vn1.z=ot1.vn2.z+v21.z;	
+	//		//переработка векторов текстур
+	//		v20.x=(double)(d.vt0.x-d.vt2.x);		v20.y=(double)(d.vt0.y-d.vt2.y);
+	//		v21.x=(double)(d.vt1.x-d.vt2.x);		v21.y=(double)(d.vt1.y-d.vt2.y);
+	//		v20.x*=k0;		v20.y*=k0;				v21.x*=k1;		v21.y*=k1;
+	//		ot1.vt0.x=ot1.vt2.x+(int)v20.x;		ot1.vt0.y=ot1.vt2.y+(int)v20.y;	
+	//		ot1.vt1.x=ot1.vt2.x+(int)v21.x;		ot1.vt1.y=ot1.vt2.y+(int)v21.y;	
+	//		otv1=ot1;
+	//		return 1;
+	//	}
+	//	if(b1){swap(b1,b0);	swap(d.v1,d.v0);	swap(d.vn1,d.vn0);	swap(d.vt1,d.vt0);}
+	//	if(b2){swap(b2,b0);	swap(d.v2,d.v0);	swap(d.vn2,d.vn0);	swap(d.vt2,d.vt0);}
+	//	if(b0){
+	//				 ot1.v1=d.v1;					  ot1.vn1=d.vn1;				  ot1.vt1=d.vt1;				
+	//		ot2.v2=ot1.v2=d.v2;			ot2.vn2=ot1.vn2=d.vn2;		ot2.vt2=ot1.vt2=d.vt2;				
+	//		ot2.Img=ot1.Img=d.Img;
+	//		POINT3 v20,v10; double k1,k2;
+	//		//переработка векторов вершин
+	//		v20.x=d.v0.x-d.v2.x;		v20.y=d.v0.y-d.v2.y;		v20.z=d.v0.z-d.v2.z;
+	//		v10.x=d.v0.x-d.v1.x;		v10.y=d.v0.y-d.v1.y;		v10.z=d.v0.z-d.v1.z;
+	//		k2=(-1-d.v2.y)/v20.y;	k1=(-1-d.v1.y)/v10.y;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.v1.x=ot1.v0.x=ot1.v1.x+v10.x;	ot2.v1.y=ot1.v0.y=ot1.v1.y+v10.y;	ot2.v1.z=ot1.v0.z=ot1.v1.z+v10.z;	
+	//					ot2.v0.x=ot2.v2.x+v20.x;				ot2.v0.y=ot2.v2.y+v20.y;				ot2.v0.z=ot2.v2.z+v20.z;	
+	//		//переработка векторов нормалей
+	//		v20.x=d.vn0.x-d.vn2.x;		v20.y=d.vn0.y-d.vn2.y;		v20.z=d.vn0.z-d.vn2.z;
+	//		v10.x=d.vn0.x-d.vn1.x;		v10.y=d.vn0.y-d.vn1.y;		v20.z=d.vn0.z-d.vn1.z;
+	//		v20.x*=k2;		v20.y*=k2;		v20.z*=k2;			v10.x*=k1;		v10.y*=k1;		v10.z*=k1;
+	//		ot2.vn1.x=ot1.vn0.x=ot1.vn1.x+v10.x;	ot2.vn1.y=ot1.vn0.y=ot1.vn1.y+v10.y;	ot2.vn2.z=ot1.vn0.z=ot1.vn1.z+v10.z;	
+	//					 ot2.vn0.x=ot2.vn2.x+v20.x;				 ot2.vn0.y=ot2.vn2.y+v20.y;				 ot2.vn0.z=ot2.vn2.z+v20.z;	
+	//		//переработка векторов текстур
+	//		v20.x=d.vt0.x-d.vt2.x;				v20.y=d.vt0.y-d.vt2.y;
+	//		v10.x=d.vt0.x-d.vt1.x;				v10.y=d.vt0.y-d.vt1.y;
+	//		v20.x*=k2;		v20.y*=k2;			v10.x*=k1;		v10.y*=k1;
+	//		ot2.vt1.x=ot1.vt0.x=ot1.vt1.x+v10.x;			ot2.vt1.y=ot1.vt0.y=ot1.vt1.y+v10.y;	
+	//					 ot2.vt0.x=ot2.vt2.x+v20.x;						 ot2.vt0.y=ot2.vt2.y+v20.y;	
+	//		otv1=ot1; otv2=ot2;
+	//		return 2;
+	//	}
+	//	return -1;
+	//}

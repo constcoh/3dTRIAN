@@ -1,0 +1,3 @@
+newmtl TextureSphera
+map_Ka TEST\\SPHERA\\sphera.bmp
+map_Ns TEST\\SPHERA\\spheraNs.bmp

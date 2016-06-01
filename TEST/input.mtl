@@ -1,0 +1,4 @@
+newmtl Texture1
+map_Ka TEST\\texture1.bmp
+newmtl Texture2
+map_Ka TEST\\texture2.bmp
